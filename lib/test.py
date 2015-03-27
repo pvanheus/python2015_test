@@ -7,10 +7,19 @@ import shlex
 
 class Test(object):
 
-    def __init__(self):
+    def __init__(self, name=None, email=None):
         self.tests = dict()
         self.marks_for_questions = dict()
         self.test_marks = dict()
+        self.name = name
+        self.email = email
+
+    def register(self, name, email):
+        if not '@' in email:
+            return('Usage: register("Real Name", "email@somewhere.ac.za")')
+        self.name = name
+        self.email = email
+        return("Thank you " + self.name)
 
     def add_test(self, question, test, marks):
         self.tests[question] = test
@@ -109,7 +118,7 @@ def test_count_name(func):
         assert run_count_name('names.txt', 'RXRG') == 6
     except OSError as e:
         raise AssertionError("Test failed: {}".format(e.strerror))
-        
+
 python_test = Test()
 python_test.add_test(1, test_multiply, 2)
 python_test.add_test(2, test_product_of, 3)
